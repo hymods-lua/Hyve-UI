@@ -1,0 +1,128 @@
+// Colores
+// 1. COLORES DE MARCA (BRAND)
+$primary: #0e1118;
+$primary-hover: #1d1d1d;
+$primary-light: hsl(226, 100%, 94%);
+
+$primary-color: #0e1118;
+$editor-dark: #111111;
+$editor-panel: #181818;
+$editor-canvas: #1e1e1e;
+$editor-border: #2d2d2d; 
+
+$accent: #3b82f6;
+$accent-soft: rgba(59, 130, 246, 0.1); 
+$hytale-gold: #eec11a;   
+
+// 2. MONOCROMÁTICOS (BLANCO, NEGRO Y GRISES)
+$white: #ffffff;
+$black: #000000;
+
+$gray-50:  #f9fafb; 
+$gray-100: #f3f4f6; 
+$gray-200: #e5e7eb; 
+$gray-300: #d1d5db; 
+$gray-400: #9ca3af; 
+$gray-500: #6b7280; 
+$gray-600: #4b5563; 
+$gray-700: #374151; 
+$gray-800: #1f2937; 
+$gray-900: #111827; 
+
+// 3. SEMÁNTICOS
+// Textos
+$text-main: $gray-900;       
+$text-secondary: $gray-600;  
+$text-placeholder: $gray-400;
+$text-light: #9A9CAA;
+
+// Fondos
+$bg-body: $white;     
+$bg-subtle: $gray-100;
+$bg-input: #F0F0F0;  
+
+// Bordes
+$border-light: $gray-200;
+$border-medium: $gray-300;
+
+// Estados (Feedback)
+$error-color: #ef4444;   
+$warning-color: #f59e0b; 
+$success-color: #10b981; 
+$info-color: #3b82f6;    
+
+$bg-color: #f3f4f6;
+
+
+// Fuentes
+$font-main: 'Satoshi', sans-serif;
+$font-titles: sans-serif;
+
+
+// ESPACIADOS (SPACING SCALE)
+$space-0:   0;
+$space-1:   0.25rem;  // 4px  - Ajustes finos
+$space-2:   0.5rem;   // 8px  - Separación elementos pequeños
+$space-3:   0.75rem;  // 12px
+$space-4:   1rem;     // 16px - Padding estándar
+$space-5:   1.25rem;  // 20px
+$space-6:   1.5rem;   // 24px - Margen de secciones
+$space-8:   2rem;     // 32px
+$space-10:  2.5rem;   // 40px
+$space-12:  3rem;     // 48px
+$space-16:  4rem;     // 64px - Separación entre secciones grandes
+$space-20:  5rem;     // 80px
+$space-24:  6rem;     // 96px
+
+
+// TAMAÑOS DE FUENTE
+$text-4xl: 3.5rem;    // ~56px - Título Principal (Hero)
+$text-3xl: 2.5rem;    // ~40px - Títulos de Sección
+$text-2xl: 2rem;      // ~32px - Subtítulos grandes
+$text-xl:  1.5rem;    // ~24px - Nombres de productos en lista
+// UIs
+$text-ui-xs: 0.7rem;   // 11px - Para labels de inputs (ej: "Width")
+$text-ui-sm: 0.8rem;   // 13px - Para valores de inputs y botones de panel
+$text-ui-base: 0.9rem; // 14.5px - Títulos de secciones del panel
+$text-ui-lg: 1.1rem;   // Títulos de modales
+
+// Cuerpo (Body) - Para usar con Satoshi
+$text-lg:   1.125rem; // ~18px - Introducciones / Destacados
+$text-base: 1rem;     // ~16px - Texto estándar
+$text-sm:   0.875rem; // ~14px - Textos secundarios / Botones pequeños
+$text-xs:   0.75rem;  // ~12px - Legal / Etiquetas pequeñas
+
+// Altura de línea (Line Height)
+$leading-tight: 1.1;  // Para títulos grandes (Archivo Black)
+$leading-snug:  1.3;  // Para subtítulos
+$leading-normal: 1.5; // Para párrafos (lectura cómoda)
+$leading-loose: 1.8;  // Para textos muy cortos o aireados
+
+// 3. BORDES Y RADIUS
+$radius-sm:   4px;      // Pequeños inputs o etiquetas
+$radius-md:   8px;      // Tarjetas estándar (Tu valor original)
+$radius-lg:   16px;     // Contenedores destacados
+$radius-xl:   24px;     // Modales suaves
+$radius-pill: 9999px;   // Botones redondos y Buscador (Estilo Shop.co)
+
+$border-width: 1px;
+$border-width-2: 2px;
+
+// 4. LAYOUT Y BREAKPOINTS
+$container-width: 1240px; // Un poco más ancho es más moderno (1200px está bien también)
+$container-padding: $space-4; // Padding lateral en móviles
+
+// Breakpoints
+$bp-sm: 640px;   // Tablets pequeñas / Móviles grandes
+$bp-md: 768px;   // Tablets vertical
+$bp-lg: 1024px;  // Desktop pequeño / Tablet horizontal
+$bp-xl: 1280px;  // Desktop estándar
+$bp-2xl: 1536px; // Pantallas grandes
+
+// 5. CAPAS (Z-INDEX)
+$z-negative: -1;
+$z-normal:    1;
+$z-tooltip:   10;
+$z-fixed:     50;
+$z-modal-backdrop: 90;
+$z-modal:     100;

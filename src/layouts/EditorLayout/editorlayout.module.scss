@@ -1,0 +1,14 @@
+.editorShell {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: $editor-dark;
+}
+
+.editorMain {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}

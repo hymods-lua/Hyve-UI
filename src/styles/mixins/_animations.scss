@@ -1,0 +1,50 @@
+@use '../variables' as v;
+
+// 1. DEFINICIÓN DE KEYFRAMES
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+// Tu animación Slide In Right
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+// 2. MIXINS
+/**
+ * Mixin: Loading Spinner
+ * Crea una rueda de carga circular.
+ * @param $size: Tamaño del spinner (ancho y alto). Default: 40px
+ * @param $color: Color principal de la rueda. Default: $primary
+ * @param $border-width: Grosor del borde. Default: 4px
+ * @param $speed: Velocidad de giro. Default: 0.8s
+ */
+@mixin loader($size: 40px, $color: v.$primary, $border-width: 3px, $speed: 0.8s) {
+    width: $size;
+    height: $size;
+    border: $border-width solid rgba($color, 0.1);
+    border-top: $border-width solid $color; 
+    border-radius: 50%;
+    animation: spin $speed linear infinite;
+    
+    display: inline-block;
+    box-sizing: border-box; 
+}
+
+/**
+ * Mixin: Animate Slide In Right
+ * Aplica la animación de entrada desde la derecha.
+ * @param $duration: Duración. Default: 0.3s
+ * @param $delay: Retardo antes de iniciar. Default: 0s
+ */
+@mixin animate-slide-in-right($duration: 0.3s, $delay: 0s) {
+    animation: slideInRight $duration ease-out forwards $delay;
+}

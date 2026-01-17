@@ -1,0 +1,14 @@
+@use 'variables' as v;
+
+body {
+    font-family: v.$font-stack;
+    background-color: v.$light;
+    color: v.$dark;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}

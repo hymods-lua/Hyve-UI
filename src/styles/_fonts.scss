@@ -1,0 +1,95 @@
+// Archivo Black
+
+@font-face {
+    font-family: 'Archivo Black';
+    src: url('/fonts/ArchivoBlack-Regular.ttf') format('truetype');
+    font-weight: 400; 
+    font-style: normal;
+    font-display: swap;
+}
+
+// SATOSHI
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi/Satoshi-Light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi/Satoshi-LightItalic.otf') format('opentype');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+// 2. REGULAR (Peso 400) - El estándar
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi/Satoshi-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi/Satoshi-Italic.otf') format('opentype');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+// 3. MEDIUM (Peso 500) - Ideal para botones y menús
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi/Satoshi-Medium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi/Satoshi-MediumItalic.otf') format('opentype');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+// 4. BOLD (Peso 700) - Destacados importantes
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi/Satoshi-Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi/Satoshi-BoldItalic.otf') format('opentype');
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+
+// 5. BLACK (Peso 900) - Extra grueso
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi/Satoshi-Black.otf') format('opentype');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi/Satoshi-BlackItalic.otf') format('opentype');
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+}

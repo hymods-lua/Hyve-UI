@@ -1,0 +1,245 @@
+.sidebar {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: $editor-panel;
+    color: $gray-300;
+    overflow-y: scroll;
+}
+
+.section {
+    padding: $space-4;
+
+    &__title {
+        font-size: $text-ui-xs;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: $gray-500;
+        margin: 0;
+    }
+
+    &__header {
+        @include flex-between;
+    }
+}
+
+.section__header_clickable {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: $space-4;
+    user-select: none;
+    transition: opacity 0.2s;
+
+    &:hover {
+        opacity: 0.8;
+        
+        .section__title {
+            color: $gray-300; // Iluminar un poco al hover
+        }
+    }
+}
+
+
+
+.collapse_icon {
+    font-size: 1.2rem;
+    color: $gray-500;
+    margin-right: $space-1;
+    display: flex;
+    align-items: center;
+}
+
+// Cuadrícula de botones para añadir elementos
+.grid_tools {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-2;
+
+    .tool_btn {
+        background-color: $editor-dark;
+        border: 1px solid $editor-border;
+        border-radius: $radius-sm;
+        color: $gray-300;
+        padding: $space-2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: $space-1;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        svg {
+            font-size: 1.2rem;
+            color: $gray-500;
+        }
+
+        span {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        &:hover {
+            border-color: $hytale-gold;
+            background-color: $editor-border;
+            svg { color: $hytale-gold; }
+        }
+    }
+}
+
+.divider {
+    height: 1px;
+    background-color: $editor-border;
+    margin: 0 $space-4;
+}
+
+// Lista de capas (estilo Jerarquía)
+.section_layers {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.layers_list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.layer_item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; // Empuja la papelera a la derecha
+    padding: $space-2 $space-3;
+    cursor: pointer;
+    border-radius: $radius-sm;
+    transition: all 0.15s ease;
+    user-select: none;
+    margin: 1px $space-2;
+    group: hover;
+
+    // Estado normal
+    background-color: transparent;
+    border: 1px solid transparent;
+
+    &:hover {
+        background-color: rgba($white, 0.05);
+        
+        .delete_btn {
+            opacity: 1; // Mostramos la papelera al hacer hover
+        }
+    }
+
+    .drag_over_inside {
+        background-color: rgba($accent, 0.2);
+        border: 1px solid $accent;
+    }
+
+    &.active {
+        background-color: $accent; // El azul tipo Figma
+        border-color: rgba($white, 0.1);
+
+        .layer_name, .layer_icon, .delete_btn {
+            color: $white !important;
+        }
+        
+        .delete_btn:hover {
+            background-color: rgba($white, 0.2);
+        }
+    }
+}
+
+.layer_item_wrapper {
+    position: relative;
+    
+    .drop_zone_edge {
+        height: 6px; // Un poco más grueso para facilitar el drop
+        position: absolute;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        background: transparent;
+
+        &:first-child { top: -3px; }
+        &:last-child { bottom: -3px; }
+
+        .drag_over {
+            background: $hytale-gold !important;
+            height: 4px; // Se hace más gruesa al pasar por encima
+            box-shadow: 0 0 8px $hytale-gold;
+        }
+
+        &:hover {
+            background: rgba($hytale-gold, 0.5); // Guía visual dorada
+        }
+    }
+}
+
+.layer_content {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    overflow: hidden; // Para truncar texto largo
+    flex: 1;
+}
+
+.layer_icon {
+    display: flex;
+    font-size: 1.1rem;
+    color: $gray-500;
+}
+
+.layer_name {
+    font-size: $text-ui-sm;
+    color: $gray-300;
+    @include truncate;
+    font-weight: 500;
+}
+
+.delete_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: $gray-600;
+    padding: 4px;
+    border-radius: $radius-sm;
+    cursor: pointer;
+    opacity: 0; // Oculta por defecto
+    transition: all 0.2s;
+    font-size: 1rem;
+
+    &:hover {
+        background-color: rgba($error-color, 0.2);
+        color: $error-color !important;
+    }
+}
+
+.collapse_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px; 
+    height: 16px;
+    margin-right: 4px;
+    color: $gray-500;
+    transition: transform 0.2s ease;
+    
+    &:hover {
+        color: $white;
+    }
+}
+
+
+.empty_text {
+    font-size: $text-ui-xs;
+    color: $gray-600;
+    text-align: center;
+    margin-top: $space-10;
+}
+
+.icon_small {
+    color: $gray-600;
+    font-size: 0.9rem;
+}

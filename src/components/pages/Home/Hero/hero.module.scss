@@ -1,0 +1,149 @@
+.hero {
+    min-height: 100vh;
+    background-color: $editor-dark;
+    @include flex-center;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-image: 
+            radial-gradient(circle at 2px 2px, rgba($hytale-gold, 0.05) 1px, transparent 0);
+        background-size: 32px 32px;
+    }
+
+    &__container {
+        max-width: $container-width;
+        margin: 0 auto;
+        padding: 0 $container-padding;
+        display: flex;
+        align-items: center;
+        gap: $space-12;
+        z-index: 1;
+    }
+
+    &__content {
+        flex: 1.2;
+    }
+
+    &__badge {
+        display: inline-block;
+        font-size: $text-ui-xs;
+        font-weight: 700;
+        color: $hytale-gold;
+        border: 1px solid rgba($hytale-gold, 0.3);
+        padding: $space-1 $space-3;
+        border-radius: $radius-sm;
+        margin-bottom: $space-6;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    &__title {
+        font-size: $text-4xl;
+        color: $white;
+        line-height: 0.9;
+        margin-bottom: $space-6;
+        font-family: $font-titles;
+
+        span {
+            color: $hytale-gold;
+        }
+
+        .highlight {
+            display: block;
+            font-size: 1.2em;
+        }
+    }
+
+    &__description {
+        font-size: $text-lg;
+        color: $gray-400;
+        max-width: 500px;
+        margin-bottom: $space-10;
+        line-height: 1.6;
+    }
+
+    &__actions {
+        display: flex;
+        gap: $space-4;
+    }
+
+    .btn {
+        padding: $space-4 $space-8;
+        font-weight: 700;
+        font-size: $text-ui-sm;
+        border-radius: $radius-sm;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+
+        &__primary {
+            background-color: $hytale-gold;
+            color: $black;
+            border: none;
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba($hytale-gold, 0.3);
+            }
+        }
+
+        &__outline {
+            background-color: transparent;
+            color: $white;
+            border: 1px solid $editor-border;
+            &:hover {
+                background-color: $editor-border;
+                border-color: $gray-400;
+            }
+        }
+    }
+
+    &__visual {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .hero__mockup {
+        width: 100%;
+        max-width: 400px;
+        background: $editor-panel;
+        border: 1px solid $editor-border;
+        border-radius: $radius-md;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        position: relative;
+        overflow: hidden;
+
+        .mockup__header {
+            background: $editor-dark;
+            padding: $space-2 $space-4;
+            font-size: $text-ui-xs;
+            color: $gray-500;
+            border-bottom: 1px solid $editor-border;
+        }
+
+        .mockup__body {
+            padding: $space-6;
+            font-size: 13px;
+        }
+
+        .mockup__item { color: $accent; }
+        .mockup__indent { padding-left: $space-4; }
+        .mockup__prop { color: $gray-400; }
+        .mockup__label { color: $hytale-gold; margin-top: 5px; }
+
+        .mockup__accent {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle at bottom right, rgba($hytale-gold, 0.1), transparent);
+        }
+    }
+}

@@ -1,0 +1,55 @@
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    margin-bottom: $space-3;
+}
+
+.label {
+    margin-bottom: 0;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151; 
+}
+
+.inputWrapper {
+    position: relative;
+    display: flex;
+}
+
+.input {
+    width: 100%;
+    padding: 0.625rem 0.75rem;
+    font-size: 0.875rem;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    background-color: #fff;
+    transition: all 0.2s;
+    outline: none;
+
+    // Placeholder styling
+    &::placeholder {
+        color: #9ca3af;
+    }
+
+    // Focus state
+    &:focus {
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+
+    // Error state
+    &.hasError {
+        border-color: $error-color; 
+        
+        &:focus {
+            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+        }
+    }
+}
+
+.errorMessage {
+    font-size: 0.75rem;
+    color: $error-color;
+}

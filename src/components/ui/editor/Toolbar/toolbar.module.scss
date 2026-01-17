@@ -1,0 +1,124 @@
+@use 'sass:color';
+
+.toolbar {
+    height: 42px; // Muy compacta para dejar espacio al diseño
+    background-color: $editor-panel;
+    border-bottom: 1px solid $editor-border;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 $space-4;
+    user-select: none;
+}
+
+.group {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+}
+
+.divider {
+    width: 1px;
+    height: 20px;
+    background-color: $editor-border;
+    margin: 0 $space-2;
+}
+
+// Botones de Iconos (Herramientas)
+.icon_btn {
+    width: 30px;
+    height: 30px;
+    @include flex-center;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: $radius-sm;
+    color: $gray-400;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.2s;
+
+    &:hover {
+        background-color: $editor-border;
+        color: $white;
+    }
+
+    &.active {
+        color: $hytale-gold;
+        background-color: rgba($hytale-gold, 0.1);
+        border-color: rgba($hytale-gold, 0.2);
+    }
+}
+
+// Controles de Zoom
+.zoom_controls {
+    display: flex;
+    align-items: center;
+    background-color: $editor-dark;
+    border: 1px solid $editor-border;
+    border-radius: $radius-pill;
+    padding: 2px;
+
+    .zoom_value {
+        font-size: 11px;
+        font-weight: 700;
+        color: $gray-400;
+        padding: 0 $space-3;
+        min-width: 50px;
+        text-align: center;
+    }
+
+    .zoom_btn {
+        background: transparent;
+        border: none;
+        color: $gray-500;
+        @include flex-center;
+        padding: 4px;
+        cursor: pointer;
+        &:hover { color: $white; }
+    }
+}
+
+// Botones de Acción (Derecha)
+.preview_btn {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    background: transparent;
+    border: 1px solid $editor-border;
+    color: $gray-300;
+    padding: $space-1 $space-3;
+    border-radius: $radius-sm;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: $space-2;
+
+    &:hover {
+        background-color: $editor-border;
+    }
+}
+
+.export_btn {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    background-color: $hytale-gold;
+    border: none;
+    color: $black;
+    padding: $space-1 $space-4;
+    border-radius: $radius-sm;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.1s;
+
+    &:hover {
+        
+        background-color: color.scale($hytale-gold, $lightness: 10%);
+        transform: translateY(-1px);
+    }
+    &:active {
+        transform: translateY(0);
+    }
+}

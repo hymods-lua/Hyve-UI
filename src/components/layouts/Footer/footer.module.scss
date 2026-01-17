@@ -1,0 +1,132 @@
+.footer {
+    background-color: $editor-panel;
+    border-top: 1px solid $editor-border;
+    padding: $space-16 0 $space-8 0;
+    color: $gray-400;
+}
+
+.container {
+    max-width: $container-width;
+    margin: 0 auto;
+    padding: 0 $space-4;
+}
+
+.topSection {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: $space-10;
+    padding-bottom: $space-12;
+    border-bottom: 1px solid $editor-border;
+    margin-bottom: $space-8;
+
+    @include mobile-only {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+}
+
+.brandCol {
+    .logoText {
+        font-family: $font-titles;
+        font-size: $text-2xl;
+        color: $white;
+        letter-spacing: 1px;
+        
+        span {
+            color: $hytale-gold;
+        }
+    }
+
+    .description {
+        margin-top: $space-4;
+        font-size: $text-sm;
+        line-height: 1.6;
+        max-width: 320px;
+        color: $gray-500;
+
+        @include mobile-only {
+            margin: $space-4 auto;
+        }
+    }
+
+    .socials {
+        display: flex;
+        gap: $space-3;
+        margin-top: $space-6;
+
+        @include mobile-only {
+            justify-content: center;
+        }
+
+        a {
+            @include flex-center;
+            width: 36px;
+            height: 36px;
+            background: $editor-dark;
+            border: 1px solid $editor-border;
+            border-radius: $radius-sm;
+            color: $gray-400;
+            transition: all 0.2s;
+
+            &:hover {
+                color: $hytale-gold;
+                border-color: $hytale-gold;
+                transform: translateY(-2px);
+            }
+        }
+    }
+}
+
+.linksCol {
+    h4 {
+        font-size: $text-ui-xs;
+        color: $white;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        margin-bottom: $space-6;
+        text-transform: uppercase;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: $space-3;
+
+        li a {
+            text-decoration: none;
+            color: $gray-500;
+            font-size: $text-sm;
+            transition: color 0.2s;
+
+            &:hover {
+                color: $hytale-gold;
+            }
+        }
+    }
+}
+
+.bottomBar {
+    @include flex-between;
+    font-size: $text-xs;
+    color: $gray-600;
+
+    @include mobile-only {
+        flex-direction: column;
+        gap: $space-4;
+    }
+
+    .legalLinks {
+        display: flex;
+        gap: $space-6;
+
+        a {
+            color: $gray-600;
+            text-decoration: none;
+            &:hover {
+                color: $gray-400;
+            }
+        }
+    }
+}

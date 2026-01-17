@@ -1,0 +1,21 @@
+.editorGrid {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.workspace {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 260px 1fr 300px;
+    overflow: hidden;
+}
+
+.canvasContainer {
+    position: relative;
+    background-color: $editor-canvas;
+    overflow: auto;
+    background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 0);
+    background-size: 24px 24px;
+}

@@ -1,0 +1,119 @@
+.headerWrapper {
+    width: 100%;
+    background-color: $editor-panel;
+    border-bottom: 1px solid $editor-border;
+    height: 56px;
+    @include flex-center;
+    z-index: $z-fixed;
+}
+
+.navbar {
+    width: 100%;
+    padding: 0 $space-4;
+
+    &__container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $space-4;
+    }
+
+    &__logo {
+        display: flex;
+        align-items: center;
+        filter: drop-shadow(0 0 2px rgba($hytale-gold, 0.2));
+        
+        a {
+            text-decoration: none;
+            color: $hytale-gold;
+            font-family: $font-titles;
+            font-size: $text-ui-lg;
+            letter-spacing: 1px;
+        }
+    }
+
+    &__menu {
+        display: flex;
+        gap: $space-2;
+        :global(a), :global(li) {
+            list-style: none;
+            text-decoration: none;
+            color: $gray-400;
+            font-size: $text-ui-sm;
+            font-weight: 500;
+            padding: $space-1 $space-3;
+            border-radius: $radius-sm;
+            transition: all 0.2s;
+
+            &:hover {
+                color: $white;
+                background-color: $editor-border;
+            }
+        }
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: $space-3;
+    }
+
+    .lenguageBtn {
+        button {
+            background: $editor-dark;
+            border: 1px solid $editor-border;
+            padding: 4px 8px;
+            border-radius: $radius-sm;
+            cursor: pointer;
+            @include flex-center;
+            transition: border-color 0.2s;
+
+            &:hover {
+                border-color: $hytale-gold;
+            }
+
+            svg {
+                width: 20px;
+                height: auto;
+            }
+        }
+    }
+
+    &__iconBtn {
+        color: $gray-400;
+        font-size: 1.2rem;
+        position: relative;
+        @include flex-center;
+        width: 32px;
+        height: 32px;
+        border-radius: $radius-sm;
+        transition: background 0.2s;
+
+        &:hover {
+            color: $white;
+            background: $editor-border;
+        }
+
+        .notificationDot {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 8px;
+            height: 8px;
+            background-color: $hytale-gold;
+            border-radius: 50%;
+            border: 2px solid $editor-panel;
+        }
+    }
+}
+
+.navbar__hamburger {
+    display: none;
+    @include mobile-only {
+        display: block;
+        color: $white;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+    }
+}

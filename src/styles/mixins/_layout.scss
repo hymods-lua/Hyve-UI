@@ -1,0 +1,40 @@
+@use '../variables' as v;
+
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+// Texto truncado con puntos suspensivos (...)
+@mixin truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+// Mixin para botones rápidos
+@mixin btn-styles($bg-color) {
+    background-color: $bg-color;
+    color: v.$white;
+    padding: 0.5rem 1rem;
+    border-radius: v.$radius-md;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}

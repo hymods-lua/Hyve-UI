@@ -1,0 +1,60 @@
+@use '../variables' as v;
+// 1. MIXINS RESPONSIVOS (MOBILE FIRST)
+
+// Tablet Pequeña (min-width: 640px)
+@mixin sm {
+    @media (min-width: v.$bp-sm) {
+        @content;
+    }
+}
+
+// Tablet Vertical / iPad (min-width: 768px)
+@mixin md {
+    @media (min-width: v.$bp-md) {
+        @content;
+    }
+}
+
+// Desktop / Laptop (min-width: 1024px)
+@mixin lg {
+    @media (min-width: v.$bp-lg) {
+        @content;
+    }
+}
+
+// Desktop Grande (min-width: 1280px)
+@mixin xl {
+    @media (min-width: v.$bp-xl) {
+        @content;
+    }
+}
+
+// Pantallas Gigantes (min-width: 1536px)
+@mixin xxl {
+    @media (min-width: v.$bp-2xl) {
+        @content;
+    }
+}
+
+// 2. MIXIN PERSONALIZADO
+@mixin min-w($width) {
+    @media (min-width: $width) {
+        @content;
+    }
+}
+
+// 3. MIXINS "SOLO MÓVIL"
+// Útil para estilos que SOLO quieres en celular
+@mixin mobile-only {
+    // Aplica a pantallas menores que lg (1024px)
+    @media (max-width: (v.$bp-lg - 1px)) {
+        @content;
+    }
+}
+
+@mixin tablet-down {
+    // Aplica a pantallas menores que xl (1280px)
+    @media (max-width: (v.$bp-xl - 1px)) {
+        @content;
+    }
+}

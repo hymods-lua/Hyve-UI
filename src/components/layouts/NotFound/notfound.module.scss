@@ -1,0 +1,8 @@
+.notFoundContainer {
+    @include flex-center;
+    padding: $space-4 $space-4 0;
+    flex-direction: column;
+    h1 {
+        margin: $space-0;
+    }
+}

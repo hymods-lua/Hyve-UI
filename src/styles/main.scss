@@ -1,0 +1,93 @@
+@use "fonts" as f;
+@use "variables" as v;
+@use "mixins" as m;
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: v.$font-main;
+    color: v.$text-main;
+    line-height: v.$leading-normal;
+    -webkit-font-smoothing: antialiased; 
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: v.$font-titles;
+    color: v.$black;
+    margin-top: 0;
+    margin-bottom: v.$space-4;
+    line-height: v.$leading-tight; 
+    text-transform: uppercase;
+    font-weight: 400; 
+}
+
+h1 {
+    font-size: 2.5rem; // Móvil
+    @include m.lg { font-size: v.$text-4xl; } // 64px Desktop
+}
+
+h2 {
+    font-size: 2rem;
+    @include m.lg { font-size: v.$text-3xl; }
+}
+
+h3 {
+    font-size: 1.5rem;
+    @include m.lg { font-size: v.$text-2xl; }
+}
+
+p {
+    margin-bottom: v.$space-4;
+}
+
+// Texto pequeño (leyendas, footer)
+small, .text-sm {
+    font-size: v.$text-sm; // 14px
+    color: v.$text-secondary;
+}
+
+// 4. ELEMENTOS DE FORMULARIO
+button, input, textarea, select {
+    font-family: v.$font-main;
+    font-size: v.$text-base;
+}
+
+
+// 5. CLASES DE UTILIDAD
+.font-bold {
+    font-weight: 700;
+}
+// Para texto medio (Satoshi Medium - Menús/Botones)
+.font-medium {
+    font-weight: 500;
+}
+// Para texto gris suave
+.text-muted {
+    color: v.$text-secondary; 
+}
+
+#root {
+    margin: 0 auto;
+}
+
+
+:global {
+    .moveable-control {
+        width: 8px !important;
+        height: 8px !important;
+        background: v.$white !important;
+        border: 2px solid v.$accent !important;
+        border-radius: 2px !important;
+        margin-top: -4px !important;
+        margin-left: -4px !important;
+    }
+    .moveable-line {
+        background: v.$accent !important;
+        width: 1px !important;
+    }
+    .moveable-direction.moveable-rotation {
+        background: v.$white !important;
+        border: 1px solid v.$accent !important;
+    }
+}
