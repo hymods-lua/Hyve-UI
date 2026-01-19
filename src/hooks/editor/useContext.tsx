@@ -1,115 +1,119 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { HytaleNode } from "./types";
+import { HytaleNode } from "@/types/editor";
+import { useEditorZoom } from "@/hooks/editor/canvas/useEditorZoom";
+import { useEditorHistory } from "@/hooks/editor/useEditorHistory";
 
 interface EditorContextType {
-  elements: HytaleNode[];
-  targets: (HTMLElement | SVGElement)[];
-  setTargets: (t: (HTMLElement | SVGElement)[]) => void;
-  setElements: (elements: HytaleNode[], saveToHistory?: boolean) => void;
-  undo: () => void;
-  redo: () => void;
-  canUndo: boolean;
-  canRedo: boolean;
-  zoom: number,
-  setZoom: (t: number) => void;
-  clearProject: () => void;
+    elements: HytaleNode[];
+    setElements: (elements: HytaleNode[], saveToHistory?: boolean) => void;
+    targets: (HTMLElement | SVGElement)[];
+    setTargets: (t: (HTMLElement | SVGElement)[]) => void;
+    canvasSize: { width: number; height: number };
+    setCanvasSize: (size: { width: number; height: number }) => void;
+    undo: () => void;
+    redo: () => void;
+    canUndo: boolean;
+    canRedo: boolean;
+    zoom: number;
+    setZoom: (t: number) => void;
+    clearProject: () => void;
 }
 
 const EditorContext = createContext<EditorContextType | undefined>(undefined);
 
 export const EditorProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [elements, _setElements] = useState<HytaleNode[]>([]);
-  const [history, setHistory] = useState<HytaleNode[][]>([]);
-  const [currentIndex, setCurrentIndex] = useState(-1);
-  const [zoom, setZoom] = useState(1);
-  const [targets, setTargets] = useState<(HTMLElement | SVGElement)[]>([]);
-  const STORAGE_KEY = "hyve_ui_editor_v1";
+    // 1. Estado local básico
+    const [elements, _setElements] = useState<HytaleNode[]>([]);
+    const [targets, setTargets] = useState<(HTMLElement | SVGElement)[]>([]);
+    const [canvasSize, setCanvasSize] = useState({ width: 1920, height: 1080 });
+    const STORAGE_KEY = "hyve_ui_editor_v1";
 
-  useEffect(() => {
-    const savedData = localStorage.getItem(STORAGE_KEY);
-    if (savedData) {
-      try {
-          const parsed = JSON.parse(savedData);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-              setElements(parsed, false); 
-          }
-      } catch (e) {
-          console.error("Error cargando desde localStorage", e);
-      }
-    }
-  }, []); 
+    // 2. Usar Hooks personalizados
+    const { zoom, setZoom } = useEditorZoom();
+    const history = useEditorHistory([]); 
 
-  useEffect(() => {
-    if (elements.length > 0) {
+
+    useEffect(() => {
+        const savedData = localStorage.getItem(STORAGE_KEY);
+        if (savedData) {
+            try {
+                const parsed = JSON.parse(savedData);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    _setElements(parsed);
+                    history.addToHistory(parsed);
+                }
+            } catch (e) {
+                console.error("Error loading localStorage", e);
+            }
+        }
+    }, []);
+
+    // Persistencia automática
+    useEffect(() => {
+        if (elements.length > 0) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(elements));
-    }
-  }, [elements]);
+        }
+    }, [elements]);
 
-  useEffect(() => {
-    localStorage.setItem("hyve_ui_zoom", zoom.toString());
-  }, [zoom]);
+    // 4. Lógica unificada de actualización
+    const setElements = useCallback((newElements: HytaleNode[], saveToHistory = true) => {
+        _setElements(newElements);
+        if (saveToHistory) {
+            history.addToHistory(newElements);
+        }
+    }, [history]);
 
-  // Cargar zoom inicial
-  useEffect(() => {
-    const savedZoom = localStorage.getItem("hyve_ui_zoom");
-    if (savedZoom) setZoom(parseFloat(savedZoom));
-  }, []);
+    // 5. Wrappers para Undo/Redo (conectan historial con estado visual)
+    const handleUndo = useCallback(() => {
+        const prevElements = history.undo();
+        if (prevElements) {
+            _setElements(prevElements);
+            setTargets([]); // Limpiar selección al deshacer
+        }
+    }, [history]);
 
-  const clearProject = () => {
-    if (window.confirm("¿Estás seguro de que quieres borrar todo el diseño?")) {
-        setElements([], true); // Guardamos en historial por si se arrepiente (Ctrl+Z)
-        setTargets([]);
-        localStorage.removeItem("hyve_ui_editor_v1");
-    }
-  };
+    const handleRedo = useCallback(() => {
+        const nextElements = history.redo();
+        if (nextElements) {
+            _setElements(nextElements);
+            setTargets([]);
+        }
+    }, [history]);
 
-  // Función principal para actualizar elementos
-  const setElements = useCallback((newElements: HytaleNode[], saveToHistory = true) => {
-    _setElements(newElements);
+    const clearProject = useCallback(() => {
+        if (globalThis.confirm("¿Estás seguro de que quieres borrar todo el diseño?")) {
+            setElements([], true);
+            setTargets([]);
+            localStorage.removeItem(STORAGE_KEY);
+            history.clearHistory();
+        }
+    }, [setElements, history]);
 
-    if (saveToHistory) {
-      const newHistory = history.slice(0, currentIndex + 1);
-      newHistory.push([...newElements]);
-      if (newHistory.length > 50) newHistory.shift();
-      setHistory(newHistory);
-      setCurrentIndex(newHistory.length - 1);
-    }
-  }, [history, currentIndex]);
-
-  const undo = useCallback(() => {
-    if (currentIndex > 0) {
-      const prevIndex = currentIndex - 1;
-      setCurrentIndex(prevIndex);
-      _setElements([...history[prevIndex]]);
-      setTargets([]); // Limpiamos selección para evitar errores visuales
-    }
-  }, [currentIndex, history]);
-
-  const redo = useCallback(() => {
-    if (currentIndex < history.length - 1) {
-      const nextIndex = currentIndex + 1;
-      setCurrentIndex(nextIndex);
-      _setElements([...history[nextIndex]]);
-      setTargets([]);
-    }
-  }, [currentIndex, history]);
-
-  return (
-    <EditorContext.Provider value={{ 
-      elements, setElements, undo, redo, 
-      canUndo: currentIndex > 0, 
-      canRedo: currentIndex < history.length - 1,
-      targets, setTargets,
-      zoom, setZoom,
-      clearProject
-    }}>
-      {children}
-    </EditorContext.Provider>
-  );
+    return (
+        <EditorContext.Provider
+            value={{
+                elements,
+                setElements,
+                targets,
+                setTargets,
+                canvasSize,
+                setCanvasSize,
+                zoom,
+                setZoom,
+                undo: handleUndo,
+                redo: handleRedo,
+                canUndo: history.canUndo,
+                canRedo: history.canRedo,
+                clearProject
+            }}
+        >
+            {children}
+        </EditorContext.Provider>
+    );
 };
 
 export const useEditorContext = () => {
-  const context = useContext(EditorContext);
-  if (!context) throw new Error("useEditorContext debe usarse dentro de EditorProvider");
-  return context;
+    const context = useContext(EditorContext);
+    if (!context) throw new Error("useEditorContext must be used within EditorProvider");
+    return context;
 };

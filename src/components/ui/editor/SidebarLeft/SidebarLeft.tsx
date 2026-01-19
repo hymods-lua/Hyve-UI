@@ -8,7 +8,6 @@ export default function SidebarLeft() {
         <div>
             <LibraryPanel/>
             <div className={style.divider} />
-            {/* SECCIÓN JERARQUÍA */}
             <LayersPanel/>
         </div>
     </aside>

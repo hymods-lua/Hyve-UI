@@ -5,15 +5,10 @@ import { MXIcon, USIcon } from "@/components/icons/Countries/Countries";
 import NavItems from "./NavItems/NavItems";
 import useAppTranslation from "@/hooks/layouts/useTranslation";
 import style from "./navbar.module.scss";
-// Auth context.
-import { useAuth } from "@/hooks/useAuth";
-import { Link } from "react-router-dom";
-import ProfileMenu from "@/components/layouts/Navbar/ProfileMenu/ProfileMenu";
 
 const Navbar = () => {
      const [isOpen, setIsOpen] = useState(false);
     const { appI18n, changeLanguage } = useAppTranslation();
-    const { isAuthenticated, user } = useAuth();
 
     return (
         <header className={style.headerWrapper}>
@@ -48,18 +43,6 @@ const Navbar = () => {
                                     <MXIcon />
                                 </button>
                             )}
-                        </div>
-
-                        {/* Botón de Notificaciones / Perfil rápido */}
-                        {(isAuthenticated || user) && (
-                            <Link to="/profile" className={style.navbar__iconBtn}>
-                                <span className={style.notificationDot}></span>
-                            </Link>
-                        )}
-
-                        {/* Menú de Usuario Dropdown */}
-                        <div className={style.profileWrapper}>
-                            <ProfileMenu />
                         </div>
                     </div>
                 </div>

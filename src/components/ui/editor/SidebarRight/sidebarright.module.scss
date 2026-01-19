@@ -4,15 +4,17 @@
     display: flex;
     flex-direction: column;
     border-left: 1px solid $editor-border;
-    overflow-y: scroll;
+    overflow-y: hidden; // Cambiado a hidden para que solo scrollee el contenido
 }
 
+// --- HEADER (ID & TIPO) ---
 .header {
     padding: $space-4;
     background-color: $editor-dark;
     border-bottom: 1px solid $editor-border;
     @include flex-column;
     gap: $space-1;
+    flex-shrink: 0; // Evita que el header se achique
 
     .type_badge {
         font-size: 10px;
@@ -21,55 +23,54 @@
         text-transform: uppercase;
         letter-spacing: 1px;
     }
-
-    .element_id {
-        font-size: $text-ui-base;
-        color: $white;
-        margin: 0;
-    }
 }
 
 .id_input_wrapper {
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: $space-2;
     margin-top: $space-1;
+    background: rgba($white, 0.05);
+    border-radius: $radius-sm;
+    padding: 0 $space-2;
+    border: 1px solid transparent;
 
     .hash {
         color: $hytale-gold;
         font-weight: bold;
-        font-size: 1.2rem;
+        font-size: 1rem;
+        user-select: none;
+    }
+
+    &:focus-within {
+        border-color: $hytale-gold;
     }
 }
 
 .id_input {
     background: transparent;
     border: none;
-    border-bottom: 1px solid transparent;
     color: $white;
     font-family: $font-main;
-    font-size: 1.1rem;
-    font-weight: 700;
+    font-size: $text-ui-sm;
+    font-weight: 600;
     width: 100%;
     outline: none;
-    padding: 2px 0;
-    transition: border-color 0.2s;
-
-    &:focus {
-        border-bottom-color: $hytale-gold;
-    }
-
-    &:hover {
-        background-color: rgba($white, 0.03);
-    }
+    padding: $space-2 0;
 }
 
+// --- CONTENIDO PRINCIPAL ---
 .content {
     padding: $space-4;
     display: flex;
     flex-direction: column;
     gap: $space-6;
     overflow-y: auto;
+    flex: 1;
+    
+    // Scrollbar estilizado sutil
+    &::-webkit-scrollbar { width: 6px; }
+    &::-webkit-scrollbar-thumb { background: $gray-600; border-radius: 3px; }
 }
 
 .section {
@@ -85,19 +86,16 @@
         
         svg {
             color: $hytale-gold;
+            font-size: 1.1em;
         }
     }
 }
 
-.input_grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: $space-3;
-}
-
+// --- INPUTS GENÉRICOS ---
 .input_group {
     @include flex-column;
     gap: $space-1;
+    margin-bottom: $space-2;
 
     label {
         font-size: 11px;
@@ -107,6 +105,7 @@
 
     input[type="text"],
     input[type="number"],
+    input[type="color"], 
     .select {
         background-color: $editor-dark;
         border: 1px solid $editor-border;
@@ -116,28 +115,112 @@
         font-size: $text-ui-sm;
         outline: none;
         width: 100%;
+        transition: border-color 0.2s;
+        min-height: 32px; // Altura consistente
 
         &:focus {
-            border-color: $accent;
+            border-color: $hytale-gold; // Usamos tu acento dorado
+        }
+
+        &::placeholder {
+            color: $gray-600;
         }
     }
-}
-
-.color_picker_row {
-    display: flex;
-    gap: $space-2;
-    align-items: center;
-
+    
+    // Ajuste específico para color picker
     input[type="color"] {
-        padding: 0;
-        border: none;
-        width: 30px;
-        height: 30px;
-        background: none;
+        padding: 2px;
+        height: 32px;
         cursor: pointer;
     }
 }
 
+// --- LAYOUTS Y GRILLAS (NUEVOS) ---
+
+// Grilla normal de 2 columnas
+.input_grid, .row_2_col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-3;
+    align-items: center;
+}
+
+// Grilla pequeña de 4 columnas (Padding)
+.mini_grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+
+    input { 
+        text-align: center; 
+        padding: $space-1; 
+        font-size: 11px;
+    }
+}
+
+// --- COMPONENTES UI ESPECIALES (NUEVOS) ---
+
+// Grupo de botones (Iconos de alineación)
+.button_group {
+    display: flex;
+    background-color: $editor-dark;
+    border: 1px solid $editor-border;
+    border-radius: $radius-sm;
+    overflow: hidden;
+
+    button {
+        flex: 1;
+        background: transparent;
+        border: none;
+        border-right: 1px solid $editor-border;
+        color: $gray-500;
+        padding: $space-2 0;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.2s;
+        font-size: 1.2em;
+
+        &:last-child { border-right: none; }
+        
+        &:hover { 
+            background-color: rgba($white, 0.05); 
+            color: $white; 
+        }
+        
+        &.active {
+            background-color: rgba($hytale-gold, 0.1);
+            color: $hytale-gold;
+        }
+    }
+}
+
+// Fila con Switch/Checkbox
+.switch_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $editor-dark;
+    padding: $space-2 $space-3;
+    border-radius: $radius-sm;
+    border: 1px solid transparent; // Para alinearse con inputs
+    
+    label {
+        font-size: $text-ui-sm;
+        color: $gray-400;
+        cursor: pointer;
+    }
+
+    input[type="checkbox"] {
+        accent-color: $hytale-gold;
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+    }
+}
+
+// --- ESTADOS ---
 .empty_state {
     @include flex-center;
     height: 100%;
@@ -145,4 +228,6 @@
     text-align: center;
     color: $gray-600;
     font-size: $text-ui-sm;
+    flex-direction: column;
+    gap: $space-2;
 }

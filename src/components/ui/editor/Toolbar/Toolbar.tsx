@@ -1,21 +1,23 @@
 import { useEditor } from "@/hooks/editor/useEditor";
 import style from "./toolbar.module.scss";
 import { 
-    BiUndo, BiRedo, BiTargetLock, 
+    BiUndo, BiRedo,
     BiZoomIn, BiZoomOut, BiCodeAlt, 
-    BiShow, BiGridAlt, 
     BiImport,
-    BiFileBlank
+    BiFileBlank,
+    BiDesktop
 } from "react-icons/bi";
 import { downloadDSL, downloadProject } from "@/utils/GenerateDSL";
 import React from "react";
+import { VIEWPORT_PRESETS } from "@/hooks/editor/libraries/registry";
+import { generateJava } from "@/utils/generateJava";
 
 export default function Toolbar() {
-    const { setElements, elements, undo, redo, zoom, setZoom, clearProject } = useEditor();
+    const { setElements, elements, undo, redo, zoom, setZoom, clearProject, canvasSize, setCanvasSize } = useEditor();
     const handleZoom = (delta: number) => {
-        // Limitamos el zoom entre 10% y 200%
         setZoom(Math.min(Math.max(zoom + delta, 0.1), 2));
     };
+    
     const fileInputRef = React.useRef<HTMLInputElement>(null);
 
     const handleImportJson = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,15 +28,13 @@ export default function Toolbar() {
         reader.onload = (event) => {
             try {
                 const json = JSON.parse(event.target?.result as string);
-                
-                // Validación básica: ¿Es un array de elementos?
                 if (Array.isArray(json)) {
-                    // Actualizamos el estado y guardamos en el historial (true)
                     setElements(json, true);
                     alert("Proyecto cargado con éxito");
                 } else {
                     alert("El archivo no tiene un formato válido de WayhomeUI");
                 }
+
             } catch (error) {
                 console.error("Error al parsear el JSON:", error);
                 alert("Error al leer el archivo. Asegúrate de que sea un .json válido.");
@@ -44,6 +44,19 @@ export default function Toolbar() {
         
         // Limpiamos el input para poder cargar el mismo archivo dos veces si se desea
         e.target.value = "";
+    };
+
+    const handleExportJava = () => {
+        // 1. Filtrar nodos (si quieres omitir nodos ocultos, etc)
+        const javaCode = generateJava(
+            elements, 
+            "MainMenuGui",       // Nombre de la clase
+            "Pages/MainMenu.ui"  // Ruta del archivo UI (la que genera el DSL)
+        );
+        
+        // 2. Descargar o Copiar
+        navigator.clipboard.writeText(javaCode);
+        alert("Código Java copiado al portapapeles!");
     };
 
 
@@ -56,13 +69,6 @@ export default function Toolbar() {
                 <button className={style.icon_btn} title="Rehacer (Ctrl+Y)" onClick={redo}>
                     <BiRedo />
                 </button>
-                <div className={style.divider} />
-                <button className={`${style.icon_btn} ${style.active}`} title="Ajuste Magnético (Snap)">
-                    <BiTargetLock />
-                </button>
-                <button className={style.icon_btn} title="Mostrar Cuadrícula">
-                    <BiGridAlt />
-                </button>
             </div>
 
             {/* GRUPO 2: VISUALIZACIÓN / ZOOM */}
@@ -74,12 +80,27 @@ export default function Toolbar() {
                 </div>
             </div>
 
+            <div className={style.group}>
+                <div className={style.viewport_selector}>
+                    <BiDesktop />
+                    <select 
+                        value={`${canvasSize.width}x${canvasSize.height}`}
+                        onChange={(e) => {
+                            const [w, h] = e.target.value.split('x').map(Number);
+                            setCanvasSize({ width: w, height: h });
+                        }}
+                    >
+                        {VIEWPORT_PRESETS.map(preset => (
+                            <option key={preset.id} value={`${preset.width}x${preset.height}`}>
+                                {preset.label} ({preset.width}x{preset.height})
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            </div>
+
             {/* GRUPO 3: ACCIONES FINALES */}
             <div className={style.group}>
-                <button className={style.preview_btn}>
-                    <BiShow />
-                    <span>Previsualizar</span>
-                </button>
                 <button 
                     className={style.preview_btn} 
                     onClick={clearProject}
@@ -95,7 +116,6 @@ export default function Toolbar() {
                     accept=".json" 
                     onChange={handleImportJson} 
                 />
-                {/* BOTÓN DE IMPORTAR */}
                 <button 
                     className={style.preview_btn} 
                     onClick={() => fileInputRef.current?.click()}
@@ -104,7 +124,6 @@ export default function Toolbar() {
                     <BiImport />
                     <span>Importar</span>
                 </button>
-                
                 <button 
                     className={style.export_btn} 
                     onClick={() => downloadDSL(elements)}
@@ -112,7 +131,13 @@ export default function Toolbar() {
                     <BiCodeAlt />
                     <span>Exportar DSL</span>
                 </button>
-
+                <button 
+                    className={style.export_btn} 
+                    onClick={() => handleExportJava()}
+                >
+                    <BiCodeAlt />
+                    <span>Exportar Java</span>
+                </button>
                 <button className={style.export_btn} onClick={() => downloadProject(elements)}>
                     Guardar Proyecto (.json)
                 </button>

@@ -105,7 +105,6 @@ export const LayerItem: React.FC<LayerItemProps> = React.memo(({
                 }}
             />
 
-            {/* RECURSIVIDAD: Renderizar hijos si no está colapsado */}
             {!isCollapsed && children.map(child => (
                 <LayerItem 
                     key={child.id}

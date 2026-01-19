@@ -1,6 +1,6 @@
 import React from "react";
-import { COMPONENT_REGISTRY } from "@/hooks/editor/registry";
-import { HytaleNode } from "@/hooks/editor/types";
+import { COMPONENT_REGISTRY } from "@/hooks/editor/libraries/registry";
+import { HytaleNode } from "@/types/editor";
 
 interface Props {
   node: HytaleNode;

@@ -16,7 +16,6 @@ export const CategorySection = ({
 
     return (
         <section className={style.section}>
-            {/* ENCABEZADO CLICKEABLE */}
             <div 
                 className={style.section__header_clickable} 
                 onClick={onToggle}
@@ -33,15 +32,14 @@ export const CategorySection = ({
                     {types.map((type) => {
                         const config = getConfig(type);
                         if (!config) return null;
-                        
                         const Icon = config.icon;
-
+                        
                         return (
                             <button 
                                 key={type} 
                                 className={style.tool_btn} 
                                 onClick={(e) => {
-                                    e.stopPropagation(); // Evita colapsar al clickear botón
+                                    e.stopPropagation();
                                     onAdd(config);
                                 }}
                             >

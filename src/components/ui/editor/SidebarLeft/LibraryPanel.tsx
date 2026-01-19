@@ -1,5 +1,5 @@
 
-import { COMPONENT_CATEGORIES } from "@/hooks/editor/registry";
+import { COMPONENT_CATEGORIES } from "@/hooks/editor/libraries/registry";
 import { CategorySection } from "./CategorySection";
 import style from "./sidebarleft.module.scss";
 import { useLibrary } from "@/hooks/editor/sidebarleft/useLibrary";
