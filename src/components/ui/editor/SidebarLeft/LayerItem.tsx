@@ -34,14 +34,7 @@ export const LayerItem: React.FC<LayerItemProps> = React.memo(({
     const hasChildren = children.length > 0;
 
     return (
-        <div 
-            className={`${style.layer_item_wrapper}`} 
-            draggable 
-            onDragStart={(e) => {
-                e.stopPropagation();
-                e.dataTransfer.setData("elementId", element.id);
-            }}
-            >
+        <div className={style.layer_item_wrapper}>
             {/* ZONA DROP: ARRIBA (Mover antes) */}
             <div 
                 className={`${style.drop_zone_edge} ${isOver === 'before' ? style.drag_over : ''}`} 

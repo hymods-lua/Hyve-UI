@@ -1,6 +1,6 @@
 import { getHytaleBoxStyles } from "./visualUtils";
 
-// 1. EL BOTÓN DORADO DE HYTALE
+// Boton dorado de Hytale
 export const VisualButton = ({ node, isRoot, children }: any) => (
     <div
         id={node.id}
@@ -23,7 +23,7 @@ export const VisualButton = ({ node, isRoot, children }: any) => (
 );
 
 
-// 3. GRUPO GENÉRICO (Para el resto)
+// Grupo generico
 export const VisualGroup = ({ node, isRoot, children }: any) => (
     <div
         id={node.id} 

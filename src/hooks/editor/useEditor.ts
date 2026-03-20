@@ -50,13 +50,6 @@ export const useEditor = () => {
         setElements(newElements, true);
     };
 
-    /**
-     * 
-     * @param sourceId
-     * @param targetId
-     * @param position
-     * @returns 
-     */
     const reorderElement = (sourceId: string, targetId: string, position: 'before' | 'after' | 'inside') => {
         if (sourceId === targetId) return;
 
@@ -245,9 +238,23 @@ export const useEditor = () => {
 
     const handleDeleteSelected = () => {
         if (targets.length === 0) return;
+
+        const toDelete = new Set<string>();
+        const findDescendants = (parentId: string) => {
+            elements.forEach(el => {
+                if (el.parentId === parentId) {
+                    toDelete.add(el.id);
+                    findDescendants(el.id);
+                }
+            });
+        };
+
         targets.forEach(target => {
-            deleteElement(target.id);
+            toDelete.add(target.id);
+            findDescendants(target.id);
         });
+
+        setElements(elements.filter(el => !toDelete.has(el.id)), true);
         setTargets([]);
     };
 

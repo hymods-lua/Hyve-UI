@@ -1,6 +1,5 @@
-// hooks/editor/sidebarright/useSidebarRight.ts
 import { useEditor } from "@/hooks/editor/useEditor";
-import { COMPONENT_REGISTRY } from "@/hooks/editor/libraries/registry"; // Ajusta la ruta a tu registry real
+import { COMPONENT_REGISTRY } from "@/hooks/editor/libraries/registry";
 import { useCallback, useMemo } from "react";
 import { HytaleNode } from "@/types/editor";
 

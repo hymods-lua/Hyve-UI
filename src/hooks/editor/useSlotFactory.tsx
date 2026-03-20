@@ -11,13 +11,9 @@ export const generateSlots = (
     if (!config.slots || config.slots.length === 0) return [];
 
     const nodes: HytaleNode[] = [];
-
-    // Estrategia específica para Panel Decorado (Common UI)
     if (config.type === "@DecoratedContainer") {
         return createDecoratedContainerSlots(parentId, config.slots);
     }
-
-    // Estrategia Genérica (Fallback)
     config.slots.forEach(slotName => {
         nodes.push(createGenericSlot(parentId, slotName));
     });
@@ -46,8 +42,7 @@ const createDecoratedContainerSlots = (parentId: string, slots: string[]): Hytal
                     enabled: true,
                     layoutMode: "Left",
                     padding: { top: 12, left: 15, right: 15, bottom: 0 },
-                    contentAlignV: "Middle",
-                    background: "rgba(255, 255, 255, 0.05)" 
+                    background: "rgba(255, 255, 255, 0.05)"
                 }
             });
         }

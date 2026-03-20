@@ -1,4 +1,4 @@
-import style from "./sidebarright.module.scss"; // Asumo que usas el mismo archivo
+import style from "./sidebarright.module.scss";
 
 // Header de Sección
 export const SectionHeader = ({ icon: Icon, title }: { icon: any, title: string }) => (
@@ -10,19 +10,21 @@ export const SectionHeader = ({ icon: Icon, title }: { icon: any, title: string 
 // Input Genérico
 interface PropInputProps {
     label: string;
-    value: any;
+    value?: any;
+    defaultValue?: string;
     onChange: (val: any) => void;
     type?: string;
     placeholder?: string;
     className?: string;
 }
 
-export const PropertyInput = ({ label, value, onChange, type = "text", placeholder, className }: PropInputProps) => (
+export const PropertyInput = ({ label, value, defaultValue, onChange, type = "text", placeholder, className }: PropInputProps) => (
     <div className={`${style.input_group} ${className || ''}`}>
         {label && <label>{label}</label>}
         <input 
             type={type} 
             value={value} 
+            defaultValue={defaultValue}
             placeholder={placeholder}
             onChange={(e) => onChange(type === "number" ? Number.parseFloat(e.target.value) : e.target.value)} 
         />

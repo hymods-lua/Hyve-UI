@@ -68,8 +68,6 @@ export const HYTALE_LIBRARY: Record<string, ComponentConfig[]> = {
                 layoutMode: "None", 
                 visible: true,
                 fontSize: 40,
-                contentAlignH: "Center",
-                contentAlignV: "Middle",
                 color: "#FFFFFF"
             }
         },
@@ -98,8 +96,6 @@ export const HYTALE_LIBRARY: Record<string, ComponentConfig[]> = {
                 text: "ACEPTAR", 
                 styleRaw: "@DefaultTextButtonStyle",
                 color: "#FFFFFF",
-                contentAlignH: "Center",
-                contentAlignV: "Middle"
             }
         },
         {
@@ -110,8 +106,6 @@ export const HYTALE_LIBRARY: Record<string, ComponentConfig[]> = {
                 text: "CANCELAR",
                 styleRaw: "@RedButtonStyle",
                 color: "#FFCCCC",
-                contentAlignH: "Center",
-                contentAlignV: "Middle"
             }
         }
     ],
@@ -124,7 +118,6 @@ export const HYTALE_LIBRARY: Record<string, ComponentConfig[]> = {
                 text: "", 
                 background: "#000000",
                 padding: { top:0, left:5, right:5, bottom:0 },
-                contentAlignV: "Middle"
             }
         },
         {
@@ -134,7 +127,6 @@ export const HYTALE_LIBRARY: Record<string, ComponentConfig[]> = {
             defaultProperties: { 
                 text: "Opción", 
                 styleRaw: "@DefaultLabelStyle",
-                contentAlignH: "Left"
             }
         }
     ]

@@ -1,15 +1,18 @@
-// hooks/useCanvasMoveable.ts
 import { useCallback } from "react";
 import { useEditor } from "@/hooks/editor/useEditor";
 import { OnDrag, OnResize, OnResizeEnd, OnDragEnd } from "react-moveable";
+import { HytaleNode } from "@/types/editor";
 
-export const useCanvasMoveable = () => {
+export const useCanvasMoveable = (targetEl: HytaleNode | null | undefined) => {
     const { updateElement, elements } = useEditor();
+    const parentEl = targetEl ? elements.find(el => el.id === targetEl.parentId) : null;
+    const isInLayout = parentEl && parentEl.properties.layoutMode && parentEl.properties.layoutMode !== "None";
 
     // Actualización visual en tiempo real (directo al DOM para 60fps)
     const handleDrag = useCallback((e: OnDrag) => {
+        if (isInLayout) return;
         e.target.style.transform = e.transform;
-    }, []);
+    }, [isInLayout]);
 
     const handleResize = useCallback((e: OnResize) => {
         e.target.style.width = `${e.width}px`;
@@ -61,6 +64,7 @@ export const useCanvasMoveable = () => {
         handleDrag,
         handleResize,
         handleResizeEnd,
-        handleDragEnd
+        handleDragEnd,
+        isInLayout
     };
 };

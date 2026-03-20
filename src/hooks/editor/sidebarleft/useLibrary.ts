@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { useEditor } from "@/hooks/editor/useEditor"; // Asumo tu path
+import { useEditor } from "@/hooks/editor/useEditor";
 import { COMPONENT_REGISTRY } from "@/hooks/editor/libraries/registry";
 
 export const useLibrary = () => {

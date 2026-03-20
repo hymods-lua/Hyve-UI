@@ -1,8 +1,6 @@
-export type LayoutMode = "None" | "Top" | "Left" | "TopScrolling";
-export type ScrollStyle = "Default" | "Hidden" | "Always";
-export type HAlign = "Left" | "Center" | "Right";
-export type VAlign = "Top" | "Middle" | "Bottom";
-
+export type LayoutMode = "None" | "Full" | "MiddleCenter" | "Middle" | "Top" | "Bottom" | "Left" | "Right" | "Center" | "BottomScrolling" | "TopScrolling" | "LeftCenterWrap";
+export type TextHAlign = "Left" | "Center" | "Right";
+export type TextVAlign = "Top" | "Center" | "Bottom";
 
 export interface HytaleAnchor {
     // Posición / Márgenes (L, R, T, B)
@@ -12,7 +10,7 @@ export interface HytaleAnchor {
     right?: number;
 
     // Dimensiones (W, H)
-    width?: number | string;  // string para soportar "100%"
+    width?: number | string;
     height?: number | string;
     auto?: boolean;
 
@@ -47,9 +45,9 @@ export interface HytaleNode {
 
         // 2. Comportamiento de Hijos (Layout)
         layoutMode?: LayoutMode;
-        scrollStyle?: ScrollStyle;
         flexWeight?: number; // Cuánto espacio ocupa si el padre es Flex
-        
+        scrollStyle?: string;
+
         // 3. Espaciado Interno
         padding?: HytalePadding
 
@@ -62,13 +60,11 @@ export interface HytaleNode {
         color?: string;         // Color de texto/icono principal
 
         // 6. Tipografía
+        textHAlign?: TextHAlign; 
+        textVAlign?: TextVAlign;
         fontSize?: number;
         isBold?: boolean;
-        isUppercase?: boolean;  // "Upper"
-        
-        // 7. Alineación de contenido
-        contentAlignH?: HAlign;
-        contentAlignV?: VAlign;
+        isUppercase?: boolean;
         
         // --- Helpers del Editor (No necesariamente van al JSON final) ---
         fillConstraint?: "None" | "Full" | "Horizontal" | "Vertical"; 

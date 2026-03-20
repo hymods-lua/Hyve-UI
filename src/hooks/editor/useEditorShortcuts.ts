@@ -3,8 +3,8 @@ import { useEffect } from "react";
 interface ShortcutsProps {
     undo: () => void;
     redo: () => void;
-    onDelete: () => void;      // Nuevo
-    onDuplicate: () => void;   // Nuevo
+    onDelete: () => void;
+    onDuplicate: () => void;
     onEsc: () => void;       
 }
 

@@ -1,3 +1,4 @@
+import { IconType } from "react-icons";
 import { BiBox, BiCheckSquare, BiHeading, BiLayer, BiListUl, BiPointer, BiSquareRounded, BiText, BiWindow } from "react-icons/bi";
 import { MdInput } from "react-icons/md";
 import { VisualPageOverlay } from "@/components/ui/editor/visuals/common/VisualPageOverlay";
@@ -5,6 +6,18 @@ import { VisualDecoratedContainer } from "@/components/ui/editor/visuals/common/
 import { VisualButton, VisualGroup } from "@/components/ui/editor/visuals/visualsHytale";
 import { VisualPanel } from "@/components/ui/editor/visuals/common/VisualPanel";
 import { VisualTitleLabel } from "@/components/ui/editor/visuals/common/VisualTitleLabel";
+import { HytaleNode } from "@/types/editor";
+
+export interface ComponentRegistryEntry {
+    type: string;
+    label: string;
+    icon: IconType;
+    visual: React.FC<{ node: HytaleNode; isRoot: boolean; children?: React.ReactNode }>;
+    sections: string[];
+    slots?: string[];
+    defaultAnchor: Partial<HytaleNode['anchor']>;
+    defaultProperties: Partial<HytaleNode['properties']>;
+}
 
 export const VIEWPORT_PRESETS = [
     { id: 'fhd', label: '1080p (FHD)', width: 1920, height: 1080 },
@@ -25,7 +38,7 @@ export const COMPONENT_CATEGORIES = {
     "INTERACTIVOS": ["@TextButton", "@CheckBoxWithLabel", "@TextField"]
 };
 
-export const COMPONENT_REGISTRY: Record<string, any> = {    
+export const COMPONENT_REGISTRY: Record<string, ComponentRegistryEntry> = {
     "Group": {
         type: "Group",
         label: "Grupo",
@@ -76,10 +89,10 @@ export const COMPONENT_REGISTRY: Record<string, any> = {
         type: "Label",
         label: "Etiqueta",
         icon: BiText,
-        visual: VisualGroup, // Puedes usar el mismo de Group por ahora
+        visual: VisualGroup,
         sections: ["Transform", "Content", "Appearance"],
         defaultAnchor: { width: 150, height: 30 },
-        defaultProperties: { text: "Nueva Etiqueta", style: "@DefaultLabelStyle" }
+        defaultProperties: { text: "Nueva Etiqueta", styleRaw: "@DefaultLabelStyle" }
     },
     "@TextButton": {
         type: "@TextButton",
@@ -88,7 +101,7 @@ export const COMPONENT_REGISTRY: Record<string, any> = {
         visual: VisualButton,
         sections: ["Transform", "Content", "Appearance"],
         defaultAnchor: { width: 172, height: 44 },
-        defaultProperties: { text: "ACEPTAR", style: "@DefaultTextButtonStyle" }
+        defaultProperties: { text: "ACEPTAR", styleRaw: "@DefaultTextButtonStyle" }
     },
     "@IndexList": {
         type: "Group",

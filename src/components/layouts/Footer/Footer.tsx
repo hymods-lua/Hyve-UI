@@ -2,10 +2,7 @@
 import { FaTwitter, FaGithub, FaDiscord } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import style from './footer.module.scss'; 
-import { useTranslation } from 'react-i18next';
-
 const Footer = () => {
-    const { t } = useTranslation();
     const year = new Date().getFullYear();
 
     return (

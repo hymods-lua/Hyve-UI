@@ -11,10 +11,10 @@ const SNAP_GUIDELINES = [0, 100, 200, 400, 600];
 export const Canvas: React.FC = () => {
     // Hooks
     const { elements, targets, setTargets, zoom, canvasSize } = useEditor();
-    const { handleDrag, handleDragEnd, handleResize, handleResizeEnd } = useCanvasMoveable();
+    const targetEl = targets.length > 0 ? elements.find(el => el.id === targets[0].id) : null;
+    const { handleDrag, handleDragEnd, handleResize, handleResizeEnd, isInLayout } = useCanvasMoveable(targetEl);
     const canvasRef = useRef<HTMLDivElement>(null);
-
-    // Memos: Cálculos costosos que solo deben correr cuando cambian las dependencias
+    
     const rootElements = useMemo(() => 
         elements.filter(el => el.parentId === null), 
     [elements]);
@@ -42,8 +42,8 @@ export const Canvas: React.FC = () => {
 
                 <Moveable
                     target={targets}
-                    draggable={true}
-                    resizable={true}
+                    draggable={!isInLayout} 
+                    resizable={!isInLayout} 
                     snappable={true}
                     zoom={1 / zoom}
                     keepRatio={false}
@@ -58,8 +58,8 @@ export const Canvas: React.FC = () => {
                     onDragEnd={handleDragEnd}
                     onResize={handleResize}
                     onResizeEnd={handleResizeEnd}
+                    renderDirections={isInLayout ? [] : ["nw","n","ne","w","e","sw","s","se"]} 
                 />
-
                 <Selecto
                     dragContainer={"#canvas-board"}
                     selectableTargets={[".hytale-element"]}

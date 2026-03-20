@@ -1,10 +1,6 @@
-
-import { useTranslation } from 'react-i18next';
 import style from './hero.module.scss';
 
 export default function Hero () {
-    const { t } = useTranslation();
-    
     return (
         <section className={style.hero}>
             <div className={style.hero__container}>

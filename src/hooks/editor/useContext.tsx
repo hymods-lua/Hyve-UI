@@ -30,8 +30,7 @@ export const EditorProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
     // 2. Usar Hooks personalizados
     const { zoom, setZoom } = useEditorZoom();
-    const history = useEditorHistory([]); 
-
+    const history = useEditorHistory([]);
 
     useEffect(() => {
         const savedData = localStorage.getItem(STORAGE_KEY);

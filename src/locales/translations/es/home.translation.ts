@@ -91,7 +91,3 @@ export const homePageTranslation: HomePageDictionary = {
         }
     }
 }
-
-                      
-
-

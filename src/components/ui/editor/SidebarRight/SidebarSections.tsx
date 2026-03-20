@@ -66,8 +66,8 @@ export const TransformSection = ({ element, updateAnchor }: any) => {
             <div className={style.input_grid}>
                 <PropertyInput label="X" type="number" value={Math.round(element.anchor.left || 0)} onChange={(v:any) => updateAnchor("left", v)} />
                 <PropertyInput label="Y" type="number" value={Math.round(element.anchor.top || 0)} onChange={(v:any) => updateAnchor("top", v)} />
-                <PropertyInput label="W" type="text" value={element.anchor.width} onChange={(v:any) => updateAnchor("width", v)} />
-                <PropertyInput label="H" type="text" value={element.anchor.height} onChange={(v:any) => updateAnchor("height", v)} />
+                <PropertyInput label="W" type="text" value={element.anchor.width} onChange={(v:any) => updateAnchor({ width: v })} />
+                <PropertyInput label="H" type="text" value={element.anchor.height} onChange={(v:any) => updateAnchor({ height: v })} />
             </div>
 
             {/* Fill Constraints Buttons */}
@@ -82,9 +82,16 @@ export const TransformSection = ({ element, updateAnchor }: any) => {
 
 // --- LAYOUT SECTION ---
 const layoutOptions = [
-    { value: "None", label: "Libre (Canvas)" },
-    { value: "Top", label: "Vertical (Lista)" },
-    { value: "Left", label: "Horizontal (Fila)" },
+    { value: "None", label: "None (Canvas Libre)" },
+    { value: "Full", label: "Full (Llenar Todo)" },
+    { value: "Top", label: "Top (Columna Std)" },
+    { value: "Bottom", label: "Bottom (Pegado Abajo)" },
+    { value: "Left", label: "Left (Fila Horiz.)" },
+    { value: "Right", label: "Right (Fila Inv.)" },
+    { value: "Middle", label: "Middle (Centro Vert.)" },
+    { value: "Center", label: "Center (Centro Horiz.)" },
+    { value: "MiddleCenter", label: "Middle Center (Total)" },
+    { value: "TopScrolling", label: "Top Scrolling" },
 ];
 
 const scrollOptions = [
@@ -93,23 +100,35 @@ const scrollOptions = [
     { value: "Always", label: "Siempre Visible" },
 ];
 export const LayoutSection = ({ element, updateProp }: any) => {
-    // Helper para actualizar padding específico
+    
+    // Helper para actualizar un lado específico del padding sin borrar los otros
     const setPad = (key: string, val: number) => {
         const current = element.properties.padding || { top:0, bottom:0, left:0, right:0 };
         updateProp("padding", { ...current, [key]: val });
     };
+    
+    // Fallback para evitar errores si padding es undefined
     const p = element.properties.padding || { top:0, bottom:0, left:0, right:0 };
 
     return (
         <section className={style.section}>
             <SectionHeader icon={BiLayout} title="Layout & Espaciado" />
-            
-            <div className={style.row_2_col}>
+            <div className={style.input_group}>
                 <PropertySelect 
-                    label="Modo"
+                    label="Modo de Distribución"
                     value={element.properties.layoutMode || "None"} 
                     options={layoutOptions} 
                     onChange={(v: any) => updateProp("layoutMode", v)} 
+                />
+            </div>
+
+            <div className={style.row_2_col}>
+                <PropertyInput 
+                    label="Flex Weight" 
+                    placeholder="0 (Fijo) - 1 (Estirar)"
+                    type="number"
+                    value={element.properties.flexWeight || 0} 
+                    onChange={(v: any) => updateProp("flexWeight", v)} 
                 />
                  <PropertySelect 
                     label="Scroll"
@@ -119,12 +138,11 @@ export const LayoutSection = ({ element, updateProp }: any) => {
                 />
             </div>
 
-            {/* Padding Grid */}
-            <PropertyGrid label="Padding (T - R - B - L)">
-                <PropertyInput label="Top" type="number" placeholder="T" value={p.top} onChange={(v:any) => setPad("top", v)} />
-                <PropertyInput label="Right" type="number" placeholder="R" value={p.right} onChange={(v:any) => setPad("right", v)} />
-                <PropertyInput label="Bottom" type="number" placeholder="B" value={p.bottom} onChange={(v:any) => setPad("bottom", v)} />
-                <PropertyInput label="Left" type="number" placeholder="L" value={p.left} onChange={(v:any) => setPad("left", v)} />
+            <PropertyGrid label="Padding Interno">
+                <PropertyInput label="Top" type="number" placeholder="0" value={p.top} onChange={(v:any) => setPad("top", v)} />
+                <PropertyInput label="Right" type="number" placeholder="0" value={p.right} onChange={(v:any) => setPad("right", v)} />
+                <PropertyInput label="Bottom" type="number" placeholder="0" value={p.bottom} onChange={(v:any) => setPad("bottom", v)} />
+                <PropertyInput label="Left" type="number" placeholder="0" value={p.left} onChange={(v:any) => setPad("left", v)} />
             </PropertyGrid>
         </section>
     );
@@ -142,18 +160,17 @@ export const ContentSection = ({ element, updateProp }: any) => (
         />
 
         <div className={style.row_2_col}>
-            {/* Horizontal Align */}
-            <ButtonGroup label="H-Align">
-                <button onClick={() => updateProp("contentAlignH", "Left")} className={element.properties.contentAlignH === "Left" ? style.active : ""}><BiAlignLeft/></button>
-                <button onClick={() => updateProp("contentAlignH", "Center")} className={element.properties.contentAlignH === "Center" ? style.active : ""}><BiAlignMiddle/></button>
-                <button onClick={() => updateProp("contentAlignH", "Right")} className={element.properties.contentAlignH === "Right" ? style.active : ""}><BiAlignRight/></button>
+            <ButtonGroup label="Text H-Align">
+                <button onClick={() => updateProp("textHAlign", "Left")} className={element.properties.textHAlign === "Left" ? style.active : ""}><BiAlignLeft/></button>
+                <button onClick={() => updateProp("textHAlign", "Center")} className={element.properties.textHAlign === "Center" ? style.active : ""}><BiAlignMiddle/></button>
+                <button onClick={() => updateProp("textHAlign", "Right")} className={element.properties.textHAlign === "Right" ? style.active : ""}><BiAlignRight/></button>
             </ButtonGroup>
 
             {/* Vertical Align */}
-            <ButtonGroup label="V-Align">
-                <button onClick={() => updateProp("contentAlignV", "Top")} className={element.properties.contentAlignV === "Top" ? style.active : ""}><BiVerticalTop/></button>
-                <button onClick={() => updateProp("contentAlignV", "Middle")} className={element.properties.contentAlignV === "Middle" ? style.active : ""}><BiVerticalCenter/></button>
-                <button onClick={() => updateProp("contentAlignV", "Bottom")} className={element.properties.contentAlignV === "Bottom" ? style.active : ""}><BiVerticalBottom/></button>
+            <ButtonGroup label="Text V-Align">
+                <button onClick={() => updateProp("textVAlign", "Top")} className={element.properties.textVAlign === "Top" ? style.active : ""}><BiVerticalTop/></button>
+                <button onClick={() => updateProp("textVAlign", "Center")} className={element.properties.textVAlign === "Center" ? style.active : ""}><BiVerticalCenter/></button>
+                <button onClick={() => updateProp("textVAlign", "Bottom")} className={element.properties.textVAlign === "Bottom" ? style.active : ""}><BiVerticalBottom/></button>
             </ButtonGroup>
         </div>
     </section>
